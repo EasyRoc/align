@@ -1,0 +1,21 @@
+appId: com.align.posture
+productName: Align
+directories:
+  output: dist
+  buildResources: assets
+files:
+  - out/**/*
+  - public/mediapipe/**/*
+mac:
+  category: public.app-category.healthcare-fitness
+  target:
+    - dmg
+win:
+  target:
+    - nsis
+nsis:
+  oneClick: true
+  perMachine: false
+linux:
+  target:
+    - AppImage
