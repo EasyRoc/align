@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" fill="none" font-family="system-ui,-apple-system,sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8b9498"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f0fdf4"/>
+      <stop offset="50%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#fef2f2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="720" height="320" rx="12" fill="url(#bg)" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Row 1: Input -->
+  <rect x="24" y="24" width="120" height="52" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="84" y="46" text-anchor="middle" font-size="13" fill="#334155" font-weight="600">📷 摄像头</text>
+  <text x="84" y="64" text-anchor="middle" font-size="11" fill="#64748b">视频帧</text>
+
+  <line x1="144" y1="50" x2="192" y2="50" stroke="#8b9498" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- MediaPipe -->
+  <rect x="200" y="24" width="140" height="52" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="270" y="46" text-anchor="middle" font-size="13" fill="#1e40af" font-weight="600">MediaPipe WASM</text>
+  <text x="270" y="64" text-anchor="middle" font-size="11" fill="#3b82f6">姿态关键点检测</text>
+
+  <line x1="340" y1="50" x2="388" y2="50" stroke="#8b9498" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Angles -->
+  <rect x="396" y="18" width="140" height="64" rx="8" fill="#fefce8" stroke="#fde047" stroke-width="1.5"/>
+  <text x="466" y="40" text-anchor="middle" font-size="13" fill="#854d0e" font-weight="600">角度提取</text>
+  <text x="466" y="56" text-anchor="middle" font-size="10" fill="#a16207">头前倾 · 脊柱 · 肩膀</text>
+  <text x="466" y="70" text-anchor="middle" font-size="10" fill="#a16207">3 维坐姿角度</text>
+
+  <line x1="536" y1="50" x2="584" y2="50" stroke="#8b9498" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Scoring -->
+  <rect x="592" y="24" width="104" height="52" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="644" y="45" text-anchor="middle" font-size="13" fill="#166534" font-weight="600">姿态评分</text>
+  <text x="644" y="64" text-anchor="middle" font-size="11" fill="#16a34a">0–100 分</text>
+
+  <!-- Down arrow from Scoring to Alerts -->
+  <line x1="644" y1="76" x2="644" y2="104" stroke="#8b9498" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Row 2: Alerts -->
+  <rect x="490" y="112" width="206" height="52" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="593" y="134" text-anchor="middle" font-size="13" fill="#991b1b" font-weight="600">⚠ 提醒系统 AlertManager</text>
+  <text x="593" y="152" text-anchor="middle" font-size="11" fill="#dc2626">连续前倾 ≥ 5 秒 · 久坐 ≥ 45 分</text>
+
+  <!-- Fan out to outputs -->
+  <line x1="520" y1="164" x2="270" y2="206" stroke="#8b9498" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="593" y1="164" x2="593" y2="198" stroke="#8b9498" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="666" y1="164" x2="756" y2="206" stroke="#8b9498" stroke-width="1.5"/>
+
+  <!-- Output boxes -->
+  <rect x="144" y="212" width="160" height="48" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="224" y="233" text-anchor="middle" font-size="13" fill="#334155" font-weight="600">🔔 系统通知</text>
+  <text x="224" y="250" text-anchor="middle" font-size="11" fill="#64748b">· Dock 弹跳</text>
+
+  <rect x="464" y="212" width="160" height="48" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="544" y="233" text-anchor="middle" font-size="13" fill="#334155" font-weight="600">📊 Dashboard</text>
+  <text x="544" y="250" text-anchor="middle" font-size="11" fill="#64748b">实时评分 · 角度</text>
+
+  <rect x="612" y="212" width="84" height="48" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="654" y="233" text-anchor="middle" font-size="12" fill="#334155" font-weight="600">📋 Tray</text>
+  <text x="654" y="250" text-anchor="middle" font-size="11" fill="#64748b">菜单栏</text>
+
+  <!-- DB at bottom -->
+  <rect x="314" y="272" width="92" height="36" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="360" y="294" text-anchor="middle" font-size="12" fill="#475569">💾 IndexedDB</text>
+
+  <line x1="284" y1="275" x2="314" y2="290" stroke="#8b9498" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <line x1="544" y1="260" x2="430" y2="278" stroke="#8b9498" stroke-width="1.5" stroke-dasharray="4 2"/>
+</svg>

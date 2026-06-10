@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" fill="none" font-family="system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#0f0f0f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="720" height="420" rx="12" fill="url(#bg)" stroke="#262626" stroke-width="1"/>
+
+  <!-- Title bar -->
+  <rect x="24" y="16" width="672" height="36" rx="8" fill="#171717" stroke="#404040" stroke-width="1"/>
+  <text x="48" y="39" font-size="13" fill="#e5e5e5" font-weight="600">Align · 坐姿监控</text>
+  <circle cx="676" cy="34" r="5" fill="#22c55e"/>
+
+  <!-- Left column -->
+  <rect x="24" y="64" width="340" height="210" rx="8" fill="#171717" stroke="#404040" stroke-width="1"/>
+
+  <!-- Camera preview area -->
+  <rect x="40" y="80" width="308" height="160" rx="6" fill="#0a0a0a"/>
+  <text x="194" y="152" text-anchor="middle" font-size="14" fill="#737373">摄像头预览</text>
+  <text x="194" y="172" text-anchor="middle" font-size="11" fill="#525252">+ MediaPipe 骨骼叠加</text>
+  <!-- skeleton overlay mock -->
+  <circle cx="194" cy="122" r="6" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+  <line x1="194" y1="128" x2="194" y2="146" stroke="#22c55e" stroke-width="1.5"/>
+  <line x1="194" y1="135" x2="174" y2="146" stroke="#22c55e" stroke-width="1.5"/>
+  <line x1="194" y1="135" x2="214" y2="146" stroke="#22c55e" stroke-width="1.5"/>
+
+  <!-- Start button -->
+  <rect x="152" y="248" width="84" height="22" rx="5" fill="#16a34a"/>
+  <text x="194" y="263" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">开始监控</text>
+
+  <!-- Right column: Score -->
+  <rect x="380" y="64" width="200" height="210" rx="8" fill="#171717" stroke="#404040" stroke-width="1"/>
+
+  <!-- Score ring -->
+  <circle cx="480" cy="140" r="48" fill="none" stroke="#262626" stroke-width="8"/>
+  <circle cx="480" cy="140" r="48" fill="none" stroke="#22c55e" stroke-width="8" stroke-dasharray="200 302" stroke-linecap="round" transform="rotate(-90 480 140)"/>
+  <text x="480" y="136" text-anchor="middle" font-size="32" fill="#fafafa" font-weight="700">85</text>
+  <text x="480" y="156" text-anchor="middle" font-size="11" fill="#a3a3a3">坐姿评分</text>
+
+  <!-- Angle readouts -->
+  <rect x="396" y="200" width="168" height="28" rx="5" fill="#262626"/>
+  <text x="480" y="218" text-anchor="middle" font-size="11" fill="#a3a3a3">头前倾 12° · 脊柱 5° · 肩膀 2°</text>
+
+  <text x="480" y="252" text-anchor="middle" font-size="11" fill="#16a34a">坐姿良好</text>
+
+  <!-- Slouch alert banner (hidden when good) -->
+  <rect x="480" y="260" width="0" height="0" rx="0" fill="none"/>
+
+  <!-- Bottom row: Stats -->
+  <rect x="24" y="288" width="672" height="116" rx="8" fill="#171717" stroke="#404040" stroke-width="1"/>
+
+  <!-- Mini cards -->
+  <rect x="40" y="304" width="200" height="44" rx="6" fill="#0a2412" stroke="#166534" stroke-width="1"/>
+  <text x="140" y="324" text-anchor="middle" font-size="11" fill="#86efac" font-weight="600">📊 今日趋势</text>
+  <text x="140" y="340" text-anchor="middle" font-size="10" fill="#16a34a">30 天评分走势</text>
+
+  <rect x="256" y="304" width="200" height="44" rx="6" fill="#0f1b2b" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="356" y="324" text-anchor="middle" font-size="11" fill="#93c5fd" font-weight="600">🗺 活动热力图</text>
+  <text x="356" y="340" text-anchor="middle" font-size="10" fill="#3b82f6">每日监控时长分布</text>
+
+  <rect x="472" y="304" width="208" height="44" rx="6" fill="#1c1c1c" stroke="#404040" stroke-width="1"/>
+  <text x="576" y="324" text-anchor="middle" font-size="11" fill="#e5e5e5" font-weight="600">📋 事件时间线</text>
+  <text x="576" y="340" text-anchor="middle" font-size="10" fill="#a3a3a3">今日提醒 · 评分记录</text>
+
+  <!-- Labels -->
+  <text x="194" y="74" text-anchor="middle" font-size="11" fill="#737373">实时监控</text>
+  <text x="480" y="74" text-anchor="middle" font-size="11" fill="#737373">姿态评分</text>
+  <text x="360" y="298" text-anchor="middle" font-size="11" fill="#737373">历史数据</text>
+</svg>

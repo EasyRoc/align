@@ -17,6 +17,24 @@ Align 是一个基于 Electron + React + MediaPipe 的本地坐姿监控桌面�
 
 Align 的姿态识别在本机 WASM 环境中运行，不上传摄像头画面，也不保存图像。项目已将 MediaPipe WASM 和 lite pose landmarker 模型放在 `public/mediapipe/`，运行时从本地资源加载。
 
+## 系统架构
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/architecture-dark.svg">
+    <img alt="系统架构图" src="docs/diagrams/architecture.svg" width="720">
+  </picture>
+</p>
+
+## Dashboard 布局
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/dashboard-dark.svg">
+    <img alt="Dashboard 布局" src="docs/diagrams/dashboard.svg" width="720">
+  </picture>
+</p>
+
 ## 技术栈
 
 - Electron 33
