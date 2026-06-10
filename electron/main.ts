@@ -6,6 +6,8 @@ import { createTray, updateTrayMonitoring, updateTrayScore } from './tray';
 let mainWindow: BrowserWindow | null = null;
 
 function createWindow() {
+  const isMac = process.platform === 'darwin';
+
   mainWindow = new BrowserWindow({
     width: 1040,
     height: 680,
@@ -17,7 +19,7 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration: false,
     },
-    titleBarStyle: 'hiddenInset',
+    ...(isMac ? { titleBarStyle: 'hiddenInset' as const } : {}),
     backgroundColor: '#0a0a0a',
     show: false,
   });

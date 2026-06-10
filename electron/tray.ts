@@ -59,16 +59,23 @@ function rebuildMenu(): void {
 
 export function createTray(window: BrowserWindow): Tray {
   mainWindow = window;
+  const isWindows = process.platform === 'win32';
   tray = new Tray(createTrayIcon(currentScore));
   tray.setToolTip('Align - 坐姿助手');
-  tray.on('click', () => {
-    if (!mainWindow) return;
-    if (mainWindow.isVisible()) {
-      mainWindow.hide();
-    } else {
-      showMainWindow();
-    }
-  });
+  if (isWindows) {
+    // Windows: left-click shows Dashboard, right-click shows context menu
+    tray.on('click', showMainWindow);
+  } else {
+    // macOS: left-click toggles window visibility
+    tray.on('click', () => {
+      if (!mainWindow) return;
+      if (mainWindow.isVisible()) {
+        mainWindow.hide();
+      } else {
+        showMainWindow();
+      }
+    });
+  }
   rebuildMenu();
   return tray;
 }
