@@ -13,7 +13,7 @@ extraResources:
 mac:
   category: public.app-category.healthcare-fitness
   target:
-    - dmg
+    - zip
   artifactName: Align-${version}-macos-${arch}.${ext}
 win:
   target:
