@@ -8,11 +8,9 @@ files:
   - public/mediapipe/**/*
 mac:
   category: public.app-category.healthcare-fitness
-  icon: assets/icon.icns
   target:
     - dmg
 win:
-  icon: assets/icon.ico
   target:
     - nsis
 nsis:
