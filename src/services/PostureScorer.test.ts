@@ -53,21 +53,21 @@ describe('PostureScorer', () => {
     expect(score).toBe(2);
   });
 
-  it('scores a perfect upright posture >= 90 without calibration', () => {
+  it('scores 100 when angles match the default baseline', () => {
     const scorer = new PostureScorer();
     const score = scorer.score({ headAngle: 1.5, spineAngle: 1, shoulderAngle: 0.5 });
-    expect(score).toBeGreaterThanOrEqual(90);
+    expect(score).toBe(100);
   });
 
-  it('scores noticeable slouch <= 50 without calibration', () => {
+  it('scores noticeable slouch at 5 without calibration', () => {
     const scorer = new PostureScorer();
     const score = scorer.score({ headAngle: 10, spineAngle: 8, shoulderAngle: 3 });
-    expect(score).toBeLessThanOrEqual(50);
+    expect(score).toBe(5);
   });
 
-  it('scores severe slouch <= 20 without calibration', () => {
+  it('scores severe slouch at 0 without calibration', () => {
     const scorer = new PostureScorer();
     const score = scorer.score({ headAngle: 15, spineAngle: 12, shoulderAngle: 5 });
-    expect(score).toBeLessThanOrEqual(20);
+    expect(score).toBe(0);
   });
 });
