@@ -67,9 +67,9 @@ export class PostureScorer {
 
   score(angles: PostureAngles): number {
     const baseline = this.baseline ?? {
-      headAngle: ANGLE_THRESHOLDS.head * 0.33,
-      spineAngle: ANGLE_THRESHOLDS.spine * 0.4,
-      shoulderAngle: ANGLE_THRESHOLDS.shoulder * 0.4,
+      headAngle: ANGLE_THRESHOLDS.head * 0.1,
+      spineAngle: ANGLE_THRESHOLDS.spine * 0.1,
+      shoulderAngle: ANGLE_THRESHOLDS.shoulder * 0.1,
       recordedAt: 0,
     };
 

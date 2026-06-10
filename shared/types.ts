@@ -59,9 +59,9 @@ export const SCORE_WEIGHTS = {
 } as const;
 
 export const PENALTY_COEFFICIENTS = {
-  head: 6.67,
-  spine: 10,
-  shoulder: 20,
+  head: 12,
+  spine: 18,
+  shoulder: 30,
 } as const;
 
 export const ANGLE_THRESHOLDS = {
