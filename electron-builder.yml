@@ -10,12 +10,15 @@ mac:
   category: public.app-category.healthcare-fitness
   target:
     - dmg
+  artifactName: Align-${version}-macos-${arch}.${ext}
 win:
   target:
     - nsis
+  artifactName: Align-${version}-win-${arch}.${ext}
 nsis:
   oneClick: true
   perMachine: false
 linux:
   target:
     - AppImage
+  artifactName: Align-${version}-linux-${arch}.${ext}
