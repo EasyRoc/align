@@ -41,29 +41,20 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run build
-
-      - name: Verify build output
-        shell: bash
-        run: |
-          echo "=== out directory ==="
-          ls -R out/ | head -40
-          echo "=== public/mediapipe ==="
-          ls -la public/mediapipe/
 
       - name: Package ${{ matrix.platform }}
         run: npm run dist:${{ matrix.platform }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
           DEBUG: electron-builder
 
       - name: Check dist output
+        if: success() || failure()
         shell: bash
         run: |
           echo "=== dist directory ==="
           ls -la dist/ 2>/dev/null || echo "dist/ missing"
-          echo "=== find .dmg/.exe ==="
+          echo "=== find .dmg/.exe/.zip ==="
           find dist/ -name "*.dmg" -o -name "*.exe" -o -name "*.zip" 2>/dev/null || echo "no packages found"
           echo "=== find all files in dist ==="
           find dist/ -type f 2>/dev/null | head -30 || echo "no files"
@@ -72,7 +63,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Align-${{ matrix.platform }}
-          path: dist/*.{dmg,exe}
+          path: |
+            dist/*.dmg
+            dist/*.exe
+            dist/*.zip
           if-no-files-found: error
 
   release:
