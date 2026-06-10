@@ -9,7 +9,7 @@ export function usePoseDetection(
   enabled: boolean,
 ) {
   const detectorRef = useRef<PoseDetector | null>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval>>(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [pose, setPose] = useState<DetectedPose | null>(null);
   const [detectorReady, setDetectorReady] = useState(false);
   const [modelLoading, setModelLoading] = useState(false);
