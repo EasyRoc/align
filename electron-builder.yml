@@ -1,5 +1,6 @@
 appId: com.align.posture
 productName: Align
+afterPack: scripts/after-pack.mjs
 directories:
   output: dist
   buildResources: assets
