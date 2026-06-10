@@ -1,5 +1,6 @@
 import {
   Activity,
+  AlertTriangle,
   BarChart3,
   Pause,
   Play,
@@ -12,6 +13,7 @@ import type { AppSettings, PostureAngles } from '../../shared/types';
 import { DEFAULT_SETTINGS } from '../../shared/types';
 import CameraPreview from '../components/CameraPreview';
 import ScoreRing from '../components/ScoreRing';
+import ThemeToggle from '../components/ThemeToggle';
 import { useCamera } from '../hooks/useCamera';
 import { usePoseDetection } from '../hooks/usePoseDetection';
 import { usePostureScore } from '../hooks/usePostureScore';
@@ -39,6 +41,7 @@ export default function Dashboard() {
   const latestSnapshotRef = useRef<LatestSnapshot | null>(null);
   const [todayScoreAvg, setTodayScoreAvg] = useState(0);
   const [todaySlouchCount, setTodaySlouchCount] = useState(0);
+  const [slouching, setSlouching] = useState(false);
   const [sedentaryMins, setSedentaryMins] = useState(0);
 
   const loadTodayStats = useCallback(async () => {
@@ -112,6 +115,7 @@ export default function Dashboard() {
     if (!snapshot) return;
     latestSnapshotRef.current = snapshot;
     alertManagerRef.current.update(snapshot.score, true);
+    setSlouching(snapshot.score < 50);
   }, [monitoring, pose, update]);
 
   useEffect(() => {
@@ -158,30 +162,30 @@ export default function Dashboard() {
   }, [loadTodayStats, monitoring]);
 
   return (
-    <div className="min-h-dvh bg-neutral-950 text-neutral-50">
+    <div className="min-h-dvh bg-[var(--color-bg)] text-[var(--color-text)]">
       <main className="mx-auto grid min-h-dvh max-w-[1440px] grid-cols-1 gap-0 lg:grid-cols-[minmax(0,1fr)_360px]">
         <section className="flex items-center justify-center p-4 sm:p-6">
           <div className="relative flex w-full justify-center">
             <CameraPreview videoRef={videoRef} landmarks={pose?.landmarks ?? null} />
 
             {(!monitoring || cameraError || modelError || modelLoading) && (
-              <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-neutral-950/80 p-6 backdrop-blur-sm">
+              <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-overlay p-6 backdrop-blur-sm">
                 <div className="max-w-sm text-center">
-                  <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-lg bg-neutral-900 text-emerald-300">
+                  <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-lg bg-[var(--color-surface)] text-emerald-300">
                     <Activity size={28} />
                   </div>
                   {cameraError && <p className="mb-4 text-sm text-red-300">{cameraError}</p>}
                   {modelError && <p className="mb-4 text-sm text-red-300">{modelError}</p>}
-                  {modelLoading && <p className="mb-4 text-sm text-neutral-300">正在加载本地姿态模型</p>}
+                  {modelLoading && <p className="mb-4 text-sm text-[var(--color-text-secondary)]">正在加载本地姿态模型</p>}
                   {!cameraError && !modelError && !modelLoading && (
-                    <p className="mb-5 text-sm leading-6 text-neutral-400">
+                    <p className="mb-5 text-sm leading-6 text-[var(--color-text-muted)]">
                       准备好后开始实时坐姿评分。
                     </p>
                   )}
                   <button
                     onClick={() => void startMonitoring()}
                     disabled={modelLoading || !calibrationLoaded}
-                    className="inline-flex items-center gap-2 rounded-md bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-500"
+                    className="inline-flex items-center gap-2 rounded-md bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-dim)]"
                   >
                     {cameraError || modelError ? <RotateCcw size={17} /> : <Play size={17} />}
                     {cameraError || modelError ? '重试' : '开始监控'}
@@ -192,11 +196,21 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <aside className="border-t border-neutral-800 p-5 lg:border-l lg:border-t-0">
+        <aside className="border-t border-[var(--color-border)] p-5 lg:border-l lg:border-t-0">
           <div className="flex h-full flex-col gap-5">
             <div className="flex justify-center">
               <ScoreRing score={score} />
             </div>
+
+            {slouching && monitoring && (
+              <div className="flex items-center gap-3 rounded-lg border border-red-500/30 bg-red-500/10 p-3">
+                <AlertTriangle size={18} className="shrink-0 text-red-400" />
+                <div>
+                  <p className="text-sm font-medium text-red-300">检测到前倾坐姿</p>
+                  <p className="text-xs text-red-400/70">请调整坐姿，挺直背部</p>
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-3 gap-3 lg:grid-cols-1">
               <Metric label="今日均分" value={`${todayScoreAvg}`} tone="text-emerald-300" />
@@ -205,19 +219,19 @@ export default function Dashboard() {
             </div>
 
             {angles && (
-              <div className="rounded-lg border border-neutral-800 bg-neutral-900 p-4">
-                <h2 className="mb-3 text-sm font-medium text-neutral-300">实时角度</h2>
+              <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+                <h2 className="mb-3 text-sm font-medium text-[var(--color-text-secondary)]">实时角度</h2>
                 <AngleRow label="头前倾" value={angles.headAngle} healthy={angles.headAngle < 15} />
                 <AngleRow label="脊柱前倾" value={angles.spineAngle} healthy={angles.spineAngle < 10} />
                 <AngleRow label="肩膀水平" value={angles.shoulderAngle} healthy={angles.shoulderAngle < 5} />
               </div>
             )}
 
-            <div className="mt-auto flex flex-wrap gap-2">
+            <div className="mt-auto flex flex-wrap items-center gap-2">
               {monitoring ? (
                 <button
                   onClick={pauseMonitoring}
-                  className="inline-flex items-center gap-2 rounded-md bg-neutral-800 px-3 py-2 text-sm text-neutral-100 transition hover:bg-neutral-700"
+                  className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm text-[var(--color-text)] transition hover:bg-[var(--color-hover)]"
                 >
                   <Pause size={16} />
                   暂停
@@ -233,18 +247,19 @@ export default function Dashboard() {
               )}
               <button
                 onClick={() => navigate('/stats')}
-                className="inline-flex items-center gap-2 rounded-md bg-neutral-800 px-3 py-2 text-sm text-neutral-100 transition hover:bg-neutral-700"
+                className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm text-[var(--color-text)] transition hover:bg-[var(--color-hover)]"
               >
                 <BarChart3 size={16} />
                 统计
               </button>
               <button
                 onClick={() => navigate('/settings')}
-                className="inline-flex items-center gap-2 rounded-md bg-neutral-800 px-3 py-2 text-sm text-neutral-100 transition hover:bg-neutral-700"
+                className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm text-[var(--color-text)] transition hover:bg-[var(--color-hover)]"
               >
                 <SettingsIcon size={16} />
                 设置
               </button>
+              <ThemeToggle />
             </div>
           </div>
         </aside>
@@ -255,8 +270,8 @@ export default function Dashboard() {
 
 function Metric({ label, value, tone }: { label: string; value: string; tone: string }) {
   return (
-    <div className="rounded-lg border border-neutral-800 bg-neutral-900 p-4">
-      <div className="text-xs text-neutral-500">{label}</div>
+    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+      <div className="text-xs text-[var(--color-text-dim)]">{label}</div>
       <div className={`mt-1 text-lg font-semibold tabular-nums ${tone}`}>{value}</div>
     </div>
   );
@@ -265,7 +280,7 @@ function Metric({ label, value, tone }: { label: string; value: string; tone: st
 function AngleRow({ label, value, healthy }: { label: string; value: number; healthy: boolean }) {
   return (
     <div className="flex items-center justify-between py-1 text-sm">
-      <span className="text-neutral-500">{label}</span>
+      <span className="text-[var(--color-text-dim)]">{label}</span>
       <span className={`tabular-nums ${healthy ? 'text-emerald-300' : 'text-red-300'}`}>
         {value.toFixed(1)}°
       </span>

@@ -68,7 +68,7 @@ export default function CalibrateGuide({ currentAngles, onComplete }: CalibrateG
   }, [onComplete, step]);
 
   return (
-    <div className="flex min-h-[360px] flex-col justify-between rounded-lg border border-neutral-800 bg-neutral-900 p-6">
+    <div className="flex min-h-[360px] flex-col justify-between rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
       <div className="flex items-center gap-3">
         {([1, 2, 3] as Step[]).map((item) => (
           <div key={item} className="flex items-center gap-3">
@@ -78,12 +78,12 @@ export default function CalibrateGuide({ currentAngles, onComplete }: CalibrateG
                   ? 'border-emerald-500 bg-emerald-500 text-neutral-950'
                   : item === step
                     ? 'border-cyan-400 text-cyan-300'
-                    : 'border-neutral-700 text-neutral-500'
+                    : 'border-[var(--color-border)] text-[var(--color-text-dim)]'
               }`}
             >
               {item < step ? <Check size={16} /> : item}
             </div>
-            {item < 3 && <div className="h-px w-8 bg-neutral-800" />}
+            {item < 3 && <div className="h-px w-8 bg-[var(--color-border)]" />}
           </div>
         ))}
       </div>
@@ -91,12 +91,12 @@ export default function CalibrateGuide({ currentAngles, onComplete }: CalibrateG
       <div className="py-8">
         {step === 1 && (
           <div className="space-y-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-neutral-800 text-cyan-300">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--color-border)] text-cyan-300">
               <Crosshair size={24} />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-neutral-50">对准摄像头</h2>
-              <p className="mt-2 text-sm leading-6 text-neutral-400">
+              <h2 className="text-lg font-semibold text-[var(--color-text)]">对准摄像头</h2>
+              <p className="mt-2 text-sm leading-6 text-[var(--color-text-muted)]">
                 让面部、双肩和上半身进入画面，保持自然坐姿。
               </p>
             </div>
@@ -104,7 +104,7 @@ export default function CalibrateGuide({ currentAngles, onComplete }: CalibrateG
             <button
               onClick={() => setStep(2)}
               disabled={!currentAngles}
-              className="inline-flex items-center gap-2 rounded-md bg-cyan-400 px-4 py-2 text-sm font-medium text-neutral-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-500"
+              className="inline-flex items-center gap-2 rounded-md bg-cyan-400 px-4 py-2 text-sm font-medium text-neutral-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-[var(--color-border)] disabled:text-[var(--color-text-dim)]"
             >
               <CircleDot size={16} />
               开始采集
@@ -114,8 +114,8 @@ export default function CalibrateGuide({ currentAngles, onComplete }: CalibrateG
 
         {step === 2 && (
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-neutral-50">保持端正坐姿</h2>
-            <p className="text-sm text-neutral-400">目视前方，肩膀放松，系统正在记录基线。</p>
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">保持端正坐姿</h2>
+            <p className="text-sm text-[var(--color-text-muted)]">目视前方，肩膀放松，系统正在记录基线。</p>
             <div className="text-6xl font-semibold tabular-nums text-cyan-300">{countdown}</div>
           </div>
         )}
@@ -127,7 +127,7 @@ export default function CalibrateGuide({ currentAngles, onComplete }: CalibrateG
             </div>
             <div>
               <h2 className="text-lg font-semibold text-emerald-300">基线已记录</h2>
-              <p className="mt-2 text-sm text-neutral-400">Align 将用这组角度作为你的标准坐姿参考。</p>
+              <p className="mt-2 text-sm text-[var(--color-text-muted)]">Align 将用这组角度作为你的标准坐姿参考。</p>
             </div>
           </div>
         )}
@@ -137,7 +137,7 @@ export default function CalibrateGuide({ currentAngles, onComplete }: CalibrateG
         {([1, 2, 3] as Step[]).map((item) => (
           <div
             key={item}
-            className={`h-1 rounded-full ${item <= step ? 'bg-cyan-300' : 'bg-neutral-800'}`}
+            className={`h-1 rounded-full ${item <= step ? 'bg-cyan-300' : 'bg-[var(--color-border)]'}`}
           />
         ))}
       </div>

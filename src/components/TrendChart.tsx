@@ -66,15 +66,15 @@ export default function TrendChart({ records, events }: TrendChartProps) {
     <div className="space-y-6">
       <section>
         <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-sm font-medium text-neutral-300">30 天热力图</h3>
-          <span className="text-xs text-neutral-500">灰色表示暂无记录</span>
+          <h3 className="text-sm font-medium text-[var(--color-text-secondary)]">30 天热力图</h3>
+          <span className="text-xs text-[var(--color-text-dim)]">灰色表示暂无记录</span>
         </div>
         <div className="grid grid-cols-10 gap-2">
           {chartData.map((day) => (
             <div
               key={day.label}
               title={`${day.label}: ${day.count ? `${day.score} 分` : '暂无记录'}`}
-              className="aspect-square rounded-[4px] border border-neutral-900"
+              className="aspect-square rounded-[4px] border border-[var(--color-border)]"
               style={{ backgroundColor: scoreColor(day.score, day.count) }}
             />
           ))}
@@ -82,7 +82,7 @@ export default function TrendChart({ records, events }: TrendChartProps) {
       </section>
 
       <section>
-        <h3 className="mb-3 text-sm font-medium text-neutral-300">日均分趋势</h3>
+        <h3 className="mb-3 text-sm font-medium text-[var(--color-text-secondary)]">日均分趋势</h3>
         <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
@@ -108,23 +108,23 @@ export default function TrendChart({ records, events }: TrendChartProps) {
       </section>
 
       <section>
-        <h3 className="mb-3 text-sm font-medium text-neutral-300">今日事件</h3>
+        <h3 className="mb-3 text-sm font-medium text-[var(--color-text-secondary)]">今日事件</h3>
         <div className="max-h-52 space-y-2 overflow-y-auto">
-          {todayEvents.length === 0 && <p className="text-sm text-neutral-500">暂无事件</p>}
+          {todayEvents.length === 0 && <p className="text-sm text-[var(--color-text-dim)]">暂无事件</p>}
           {todayEvents.map((event) => {
             const isSlouch = event.type === 'slouch';
             const Icon = isSlouch ? AlertTriangle : Timer;
             return (
               <div
                 key={event.id ?? event.timestamp}
-                className="flex items-center gap-3 rounded-md border border-neutral-800 px-3 py-2 text-sm"
+                className="flex items-center gap-3 rounded-md border border-[var(--color-border)] px-3 py-2 text-sm"
               >
                 <Icon size={16} className={isSlouch ? 'text-red-400' : 'text-amber-400'} />
-                <span className="flex-1 text-neutral-300">{isSlouch ? '前倾提醒' : '久坐提醒'}</span>
+                <span className="flex-1 text-[var(--color-text-secondary)]">{isSlouch ? '前倾提醒' : '久坐提醒'}</span>
                 {event.duration && (
-                  <span className="text-neutral-500">持续 {Math.round(event.duration)} 秒</span>
+                  <span className="text-[var(--color-text-dim)]">持续 {Math.round(event.duration)} 秒</span>
                 )}
-                <span className="tabular-nums text-neutral-500">{formatTime(event.timestamp)}</span>
+                <span className="tabular-nums text-[var(--color-text-dim)]">{formatTime(event.timestamp)}</span>
               </div>
             );
           })}

@@ -27,6 +27,16 @@ function publicAssetUrl(path: string): string {
   return new URL(`${import.meta.env.BASE_URL}${cleanPath}`, window.location.href).toString();
 }
 
+function resolveMediapipeAsset(filename: string): string {
+  // In production (file://) use the real filesystem path from extraResources.
+  // In dev (http://) use the Vite dev server which serves public/mediapipe/.
+  const base =
+    window.location.protocol === 'file:' && window.electronAPI?.mediapipePath
+      ? window.electronAPI.mediapipePath
+      : publicAssetUrl('mediapipe');
+  return `${base}/${filename}`;
+}
+
 export class PoseDetector {
   private landmarker: PoseLandmarker | null = null;
   private loading = false;
@@ -36,7 +46,7 @@ export class PoseDetector {
     this.loading = true;
 
     try {
-      const vision = await FilesetResolver.forVisionTasks(publicAssetUrl('mediapipe/wasm'));
+      const vision = await FilesetResolver.forVisionTasks(resolveMediapipeAsset('wasm'));
       this.landmarker = await this.createLandmarker(vision, 'GPU').catch(() =>
         this.createLandmarker(vision, 'CPU'),
       );
@@ -79,7 +89,7 @@ export class PoseDetector {
   ) {
     return PoseLandmarker.createFromOptions(vision, {
       baseOptions: {
-        modelAssetPath: publicAssetUrl('mediapipe/pose_landmarker_lite.task'),
+        modelAssetPath: resolveMediapipeAsset('pose_landmarker_lite.task'),
         delegate,
       },
       runningMode: 'VIDEO',

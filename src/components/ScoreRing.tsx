@@ -29,7 +29,7 @@ export default function ScoreRing({ score, size = 168, strokeWidth = 10 }: Score
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#27272a"
+          stroke="var(--color-border)"
           strokeWidth={strokeWidth}
         />
         <circle
@@ -49,7 +49,7 @@ export default function ScoreRing({ score, size = 168, strokeWidth = 10 }: Score
         <span className="text-4xl font-semibold tabular-nums" style={{ color }}>
           {normalizedScore}
         </span>
-        <span className="mt-1 text-xs text-neutral-500">姿势评分</span>
+        <span className="mt-1 text-xs text-[var(--color-text-dim)]">姿势评分</span>
       </div>
     </div>
   );

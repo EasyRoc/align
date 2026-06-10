@@ -10,6 +10,7 @@ declare global {
       getSettings: () => Promise<unknown>;
       saveSettings: (settings: unknown) => Promise<boolean>;
       onTrayAction: (callback: (action: string) => void) => () => void;
+      mediapipePath: string;
     };
   }
 }

@@ -4,6 +4,7 @@ import { showNotification } from './notifications';
 import { createTray, updateTrayMonitoring, updateTrayScore } from './tray';
 
 let mainWindow: BrowserWindow | null = null;
+let isQuitting = false;
 
 function createWindow() {
   const isMac = process.platform === 'darwin';
@@ -28,6 +29,13 @@ function createWindow() {
     mainWindow?.show();
   });
 
+  mainWindow.on('close', (e) => {
+    if (!isQuitting) {
+      e.preventDefault();
+      mainWindow?.hide();
+    }
+  });
+
   if (process.env.ELECTRON_RENDERER_URL) {
     mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
@@ -36,6 +44,10 @@ function createWindow() {
 
   createTray(mainWindow);
 }
+
+app.on('before-quit', () => {
+  isQuitting = true;
+});
 
 app.whenReady().then(createWindow);
 
@@ -46,12 +58,18 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  else mainWindow?.show();
+  if (mainWindow) {
+    mainWindow.show();
+  } else {
+    createWindow();
+  }
 });
 
 ipcMain.on('show-notification', (_event, payload: { title: string; body: string }) => {
   showNotification(payload.title, payload.body);
+  if (process.platform === 'darwin') {
+    app.dock.bounce('informational');
+  }
 });
 
 ipcMain.on('update-tray-score', (_event, payload: { score: number; monitoring: boolean }) => {

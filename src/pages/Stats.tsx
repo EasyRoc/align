@@ -34,13 +34,13 @@ export default function Stats() {
   }, [records]);
 
   return (
-    <div className="min-h-dvh bg-neutral-950 p-4 text-neutral-50 sm:p-6">
+    <div className="min-h-dvh bg-[var(--color-bg)] p-4 text-[var(--color-text)] sm:p-6">
       <main className="mx-auto max-w-5xl">
         <header className="mb-6 flex items-center justify-between">
           <h1 className="text-xl font-semibold">统计报表</h1>
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 rounded-md bg-neutral-800 px-3 py-2 text-sm transition hover:bg-neutral-700"
+            className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
           >
             <ArrowLeft size={16} />
             返回
@@ -53,7 +53,7 @@ export default function Stats() {
           <StatCard icon={<Bell size={18} />} label="提醒总次数" value={`${events.length}`} tone="text-amber-300" />
         </section>
 
-        <section className="rounded-lg border border-neutral-800 bg-neutral-900 p-5">
+        <section className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
           <TrendChart records={records} events={events} />
         </section>
       </main>
@@ -73,8 +73,8 @@ function StatCard({
   tone: string;
 }) {
   return (
-    <div className="rounded-lg border border-neutral-800 bg-neutral-900 p-4">
-      <div className="mb-3 flex items-center gap-2 text-neutral-500">
+    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+      <div className="mb-3 flex items-center gap-2 text-[var(--color-text-dim)]">
         {icon}
         <span className="text-xs">{label}</span>
       </div>

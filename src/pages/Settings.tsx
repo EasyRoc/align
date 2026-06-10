@@ -57,13 +57,13 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-dvh bg-neutral-950 p-4 text-neutral-50 sm:p-6">
+    <div className="min-h-dvh bg-[var(--color-bg)] p-4 text-[var(--color-text)] sm:p-6">
       <main className="mx-auto max-w-3xl">
         <header className="mb-6 flex items-center justify-between">
           <h1 className="text-xl font-semibold">设置</h1>
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 rounded-md bg-neutral-800 px-3 py-2 text-sm transition hover:bg-neutral-700"
+            className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
           >
             <ArrowLeft size={16} />
             返回
@@ -116,8 +116,8 @@ export default function Settings() {
           <Section icon={<Crosshair size={18} />} title="校准">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <div className="text-sm text-neutral-200">基线数据</div>
-                <div className="mt-1 text-xs leading-5 text-neutral-500">
+                <div className="text-sm text-[var(--color-text-secondary)]">基线数据</div>
+                <div className="mt-1 text-xs leading-5 text-[var(--color-text-dim)]">
                   {calibration
                     ? `${new Date(calibration.recordedAt).toLocaleDateString('zh-CN')} · 头 ${calibration.headAngle.toFixed(1)}° · 脊柱 ${calibration.spineAngle.toFixed(1)}° · 肩 ${calibration.shoulderAngle.toFixed(1)}°`
                     : '尚未校准'}
@@ -125,7 +125,7 @@ export default function Settings() {
               </div>
               <button
                 onClick={() => void handleRecalibrate()}
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-neutral-800 px-3 py-2 text-sm transition hover:bg-neutral-700"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
               >
                 <RotateCcw size={16} />
                 重新校准
@@ -143,12 +143,12 @@ export default function Settings() {
             />
             <div className="flex items-center justify-between gap-4">
               <div>
-                <div className="text-sm text-neutral-200">导出数据</div>
-                <div className="mt-1 text-xs text-neutral-500">下载 CSV 格式的历史评分</div>
+                <div className="text-sm text-[var(--color-text-secondary)]">导出数据</div>
+                <div className="mt-1 text-xs text-[var(--color-text-dim)]">下载 CSV 格式的历史评分</div>
               </div>
               <button
                 onClick={() => void handleExport()}
-                className="inline-flex items-center gap-2 rounded-md bg-neutral-800 px-3 py-2 text-sm transition hover:bg-neutral-700"
+                className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
               >
                 <Download size={16} />
                 导出 CSV
@@ -171,8 +171,8 @@ function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-lg border border-neutral-800 bg-neutral-900 p-5">
-      <h2 className="mb-4 flex items-center gap-2 text-sm font-medium text-neutral-300">
+    <section className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+      <h2 className="mb-4 flex items-center gap-2 text-sm font-medium text-[var(--color-text-secondary)]">
         {icon}
         {title}
       </h2>
@@ -201,8 +201,8 @@ function NumberSetting({
   return (
     <label className="flex items-center justify-between gap-4">
       <span>
-        <span className="block text-sm text-neutral-200">{label}</span>
-        <span className="mt-1 block text-xs text-neutral-500">{hint}</span>
+        <span className="block text-sm text-[var(--color-text-secondary)]">{label}</span>
+        <span className="mt-1 block text-xs text-[var(--color-text-dim)]">{hint}</span>
       </span>
       <span className="flex items-center gap-2">
         <input
@@ -211,9 +211,9 @@ function NumberSetting({
           max={max}
           value={value}
           onChange={(event) => onChange(Number(event.target.value))}
-          className="w-20 rounded-md border border-neutral-700 bg-neutral-950 px-3 py-1.5 text-center text-sm text-neutral-100 outline-none focus:border-cyan-400"
+          className="w-20 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-center text-sm text-[var(--color-text)] outline-none focus:border-cyan-400"
         />
-        <span className="w-10 text-xs text-neutral-500">{suffix}</span>
+        <span className="w-10 text-xs text-[var(--color-text-dim)]">{suffix}</span>
       </span>
     </label>
   );
@@ -235,18 +235,18 @@ function ToggleSetting({
   return (
     <div className="flex items-center justify-between gap-4">
       <div>
-        <div className="flex items-center gap-2 text-sm text-neutral-200">
+        <div className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
           {icon}
           {label}
         </div>
-        <div className="mt-1 text-xs text-neutral-500">{hint}</div>
+        <div className="mt-1 text-xs text-[var(--color-text-dim)]">{hint}</div>
       </div>
       <button
         type="button"
         aria-pressed={checked}
         onClick={onChange}
         className={`relative h-6 w-11 rounded-full transition ${
-          checked ? 'bg-emerald-400' : 'bg-neutral-700'
+          checked ? 'bg-emerald-400' : 'bg-[var(--color-border)]'
         }`}
       >
         <span

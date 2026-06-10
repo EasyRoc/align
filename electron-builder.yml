@@ -7,9 +7,9 @@ directories:
 files:
   - out/**/*
   - public/mediapipe/**/*
-asarUnpack:
-  - "**/*.wasm"
-  - "**/*.task"
+extraResources:
+  - from: public/mediapipe
+    to: mediapipe
 mac:
   category: public.app-category.healthcare-fitness
   target:

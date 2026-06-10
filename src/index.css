@@ -1,12 +1,32 @@
 @import "tailwindcss";
 
 :root {
+  --color-bg: #0a0a0a;
+  --color-surface: #171717;
+  --color-border: #262626;
+  --color-text: #fafafa;
+  --color-text-secondary: #d4d4d4;
+  --color-text-muted: #a3a3a3;
+  --color-text-dim: #737373;
+  --color-hover: #27272a;
   color-scheme: dark;
   font-family:
     ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
-  background: #0a0a0a;
-  color: #fafafa;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+:root.light {
+  --color-bg: #fafafa;
+  --color-surface: #ffffff;
+  --color-border: #e5e5e5;
+  --color-text: #171717;
+  --color-text-secondary: #525252;
+  --color-text-muted: #737373;
+  --color-text-dim: #a3a3a3;
+  --color-hover: #e5e5e5;
+  color-scheme: light;
 }
 
 * {
@@ -17,10 +37,14 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100dvh;
-  background: #0a0a0a;
+  background: var(--color-bg);
 }
 
 button,
 input {
   font: inherit;
+}
+
+.bg-overlay {
+  background: color-mix(in srgb, var(--color-bg) 80%, transparent);
 }

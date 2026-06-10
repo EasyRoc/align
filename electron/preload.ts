@@ -1,4 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
+import { join } from 'path';
+import { pathToFileURL } from 'url';
 
 contextBridge.exposeInMainWorld('electronAPI', {
   showNotification: (title: string, body: string) =>
@@ -15,4 +17,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('tray-action', listener);
     return () => ipcRenderer.removeListener('tray-action', listener);
   },
+  mediapipePath: pathToFileURL(join(__dirname, '../../../mediapipe')).href,
 });

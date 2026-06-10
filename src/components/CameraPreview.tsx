@@ -82,7 +82,7 @@ export default function CameraPreview({
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900"
+      className="relative w-full overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]"
       style={{ maxWidth: width, aspectRatio: `${width}/${height}` }}
     >
       <video ref={videoRef} className="hidden" width={width} height={height} playsInline muted />

@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { PoseDetector, type DetectedPose } from '../services/PoseDetector';
 
+const DETECTION_INTERVAL_MS = 200;
+
 export function usePoseDetection(
   videoRef: React.RefObject<HTMLVideoElement | null>,
   cameraReady: boolean,
   enabled: boolean,
 ) {
   const detectorRef = useRef<PoseDetector | null>(null);
-  const rafRef = useRef<number>(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval>>(0);
   const [pose, setPose] = useState<DetectedPose | null>(null);
   const [detectorReady, setDetectorReady] = useState(false);
   const [modelLoading, setModelLoading] = useState(false);
@@ -29,29 +31,21 @@ export function usePoseDetection(
     }
   }, [modelLoading]);
 
-  const detectFrame = useCallback(
-    (timestamp: number) => {
-      const video = videoRef.current;
-      const detector = detectorRef.current;
-
-      if (video && detector && video.readyState >= 2) {
-        const result = detector.detect(timestamp, video);
-        if (result) {
-          setPose(result);
-        }
-      }
-
-      rafRef.current = requestAnimationFrame(detectFrame);
-    },
-    [videoRef],
-  );
+  const detectFrame = useCallback(() => {
+    const video = videoRef.current;
+    const detector = detectorRef.current;
+    if (video && detector && video.readyState >= 2) {
+      const result = detector.detect(performance.now(), video);
+      if (result) setPose(result);
+    }
+  }, [videoRef]);
 
   useEffect(() => {
     if (cameraReady && enabled && detectorReady) {
-      rafRef.current = requestAnimationFrame(detectFrame);
+      intervalRef.current = setInterval(detectFrame, DETECTION_INTERVAL_MS);
     }
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [cameraReady, detectFrame, detectorReady, enabled]);
 

@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' blob:; img-src 'self' data: blob:; worker-src 'self' blob:"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src 'self' blob:; connect-src 'self' blob:; img-src 'self' data: blob:; worker-src 'self' blob:"
     />
     <title>Align - 坐姿助手</title>
   </head>
   <body>
+    <script>
+      try {
+        var t = localStorage.getItem('align-theme');
+        if (t === 'light') document.documentElement.classList.add('light');
+      } catch (e) {}
+    </script>
     <div id="root"></div>
     <script type="module" src="./main.ts"></script>
   </body>
