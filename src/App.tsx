@@ -3,8 +3,11 @@ import Dashboard from './pages/Dashboard';
 import Onboarding from './pages/Onboarding';
 import Settings from './pages/Settings';
 import Stats from './pages/Stats';
+import { useTheme } from './hooks/useTheme';
 
 export default function App() {
+  useTheme();
+
   return (
     <HashRouter>
       <Routes>

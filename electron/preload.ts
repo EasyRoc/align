@@ -4,7 +4,7 @@ import { pathToFileURL } from 'url';
 
 contextBridge.exposeInMainWorld('electronAPI', {
   showNotification: (title: string, body: string) =>
-    ipcRenderer.send('show-notification', { title, body }),
+    ipcRenderer.invoke('show-notification', { title, body }),
   updateTrayScore: (score: number, monitoring: boolean) =>
     ipcRenderer.send('update-tray-score', { score, monitoring }),
   setMonitoringState: (monitoring: boolean) =>

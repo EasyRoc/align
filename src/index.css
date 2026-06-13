@@ -4,11 +4,20 @@
   --color-bg: #0a0a0a;
   --color-surface: #171717;
   --color-border: #262626;
+  --color-card-muted: #202020;
   --color-text: #fafafa;
   --color-text-secondary: #d4d4d4;
   --color-text-muted: #a3a3a3;
   --color-text-dim: #737373;
   --color-hover: #27272a;
+  --color-heat-empty: #2f3033;
+  --color-heat-good: #22c55e;
+  --color-heat-warning: #eab308;
+  --color-heat-bad: #ef4444;
+  --color-chart-axis: #8a8a8a;
+  --color-chart-tooltip-bg: #18181b;
+  --color-chart-tooltip-border: #3f3f46;
+  --color-chart-cursor: rgba(255, 255, 255, 0.05);
   color-scheme: dark;
   font-family:
     ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -21,11 +30,20 @@
   --color-bg: #fafafa;
   --color-surface: #ffffff;
   --color-border: #e5e5e5;
+  --color-card-muted: #f3f4f6;
   --color-text: #171717;
   --color-text-secondary: #525252;
   --color-text-muted: #737373;
   --color-text-dim: #a3a3a3;
   --color-hover: #e5e5e5;
+  --color-heat-empty: #e5e7eb;
+  --color-heat-good: #16a34a;
+  --color-heat-warning: #d97706;
+  --color-heat-bad: #ef4444;
+  --color-chart-axis: #737373;
+  --color-chart-tooltip-bg: #ffffff;
+  --color-chart-tooltip-border: #d4d4d4;
+  --color-chart-cursor: rgba(23, 23, 23, 0.05);
   color-scheme: light;
 }
 

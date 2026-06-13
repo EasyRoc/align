@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { AlertEvent, ScoreRecord } from '../../shared/types';
+import ThemeToggle from '../components/ThemeToggle';
 import TrendChart from '../components/TrendChart';
 import { Storage } from '../services/Storage';
 
@@ -38,13 +39,16 @@ export default function Stats() {
       <main className="mx-auto max-w-5xl">
         <header className="mb-6 flex items-center justify-between">
           <h1 className="text-xl font-semibold">统计报表</h1>
-          <button
-            onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
-          >
-            <ArrowLeft size={16} />
-            返回
-          </button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => navigate('/')}
+              className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
+            >
+              <ArrowLeft size={16} />
+              返回
+            </button>
+          </div>
         </header>
 
         <section className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">

@@ -41,10 +41,10 @@ function dailyScoreData(records: ScoreRecord[], days: number): DayScore[] {
 }
 
 function scoreColor(score: number, count: number): string {
-  if (count === 0) return '#27272a';
-  if (score >= 80) return '#22c55e';
-  if (score >= 60) return '#eab308';
-  return '#ef4444';
+  if (count === 0) return 'var(--color-heat-empty)';
+  if (score >= 80) return 'var(--color-heat-good)';
+  if (score >= 60) return 'var(--color-heat-warning)';
+  return 'var(--color-heat-bad)';
 }
 
 function formatTime(timestamp: number): string {
@@ -69,12 +69,12 @@ export default function TrendChart({ records, events }: TrendChartProps) {
           <h3 className="text-sm font-medium text-[var(--color-text-secondary)]">30 天热力图</h3>
           <span className="text-xs text-[var(--color-text-dim)]">灰色表示暂无记录</span>
         </div>
-        <div className="grid grid-cols-10 gap-2">
+        <div className="grid w-max grid-cols-[repeat(10,1.5rem)] gap-2 sm:grid-cols-[repeat(10,2rem)]">
           {chartData.map((day) => (
             <div
               key={day.label}
               title={`${day.label}: ${day.count ? `${day.score} 分` : '暂无记录'}`}
-              className="aspect-square rounded-[4px] border border-[var(--color-border)]"
+              className="aspect-square rounded-[4px] border border-[var(--color-border)] shadow-sm"
               style={{ backgroundColor: scoreColor(day.score, day.count) }}
             />
           ))}
@@ -86,15 +86,23 @@ export default function TrendChart({ records, events }: TrendChartProps) {
         <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
-              <XAxis dataKey="date" tick={{ fontSize: 10, fill: '#737373' }} interval={4} />
-              <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: '#737373' }} width={30} />
+              <XAxis
+                dataKey="date"
+                tick={{ fontSize: 10, fill: 'var(--color-chart-axis)' }}
+                interval={4}
+              />
+              <YAxis
+                domain={[0, 100]}
+                tick={{ fontSize: 10, fill: 'var(--color-chart-axis)' }}
+                width={30}
+              />
               <Tooltip
-                cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+                cursor={{ fill: 'var(--color-chart-cursor)' }}
                 contentStyle={{
-                  background: '#18181b',
-                  border: '1px solid #3f3f46',
+                  background: 'var(--color-chart-tooltip-bg)',
+                  border: '1px solid var(--color-chart-tooltip-border)',
                   borderRadius: 8,
-                  color: '#fafafa',
+                  color: 'var(--color-text)',
                 }}
               />
               <Bar dataKey="score" radius={[4, 4, 0, 0]}>

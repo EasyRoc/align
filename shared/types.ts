@@ -43,6 +43,13 @@ export interface AppSettings {
   calibrated: boolean;
 }
 
+export interface NotificationResult {
+  supported: boolean;
+  shown: boolean;
+  reason?: 'unsupported' | 'failed';
+  error?: string;
+}
+
 export const DEFAULT_SETTINGS: AppSettings = {
   slouchThresholdSec: 5,
   slouchCooldownMin: 5,

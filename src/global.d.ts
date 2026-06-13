@@ -1,9 +1,11 @@
 export {};
 
+import type { NotificationResult } from '../shared/types';
+
 declare global {
   interface Window {
     electronAPI?: {
-      showNotification: (title: string, body: string) => void;
+      showNotification: (title: string, body: string) => Promise<NotificationResult>;
       updateTrayScore: (score: number, monitoring: boolean) => void;
       setMonitoringState: (monitoring: boolean) => void;
       setAutoStart: (enabled: boolean) => Promise<boolean>;

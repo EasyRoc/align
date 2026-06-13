@@ -78,6 +78,7 @@ export default function Dashboard() {
   const pauseMonitoring = useCallback(() => {
     setMonitoringState(false);
     alertManagerRef.current.reset();
+    setSlouching(false);
   }, [setMonitoringState]);
 
   useEffect(() => {

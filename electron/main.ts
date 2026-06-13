@@ -6,6 +6,11 @@ import { createTray, updateTrayMonitoring, updateTrayScore } from './tray';
 let mainWindow: BrowserWindow | null = null;
 let isQuitting = false;
 
+app.setName('Align');
+if (process.platform === 'win32') {
+  app.setAppUserModelId('com.align.posture');
+}
+
 function createWindow() {
   const isMac = process.platform === 'darwin';
 
@@ -65,11 +70,12 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('show-notification', (_event, payload: { title: string; body: string }) => {
-  showNotification(payload.title, payload.body);
-  if (process.platform === 'darwin') {
+ipcMain.handle('show-notification', (_event, payload: { title: string; body: string }) => {
+  const result = showNotification(payload.title, payload.body);
+  if (result.shown && process.platform === 'darwin') {
     app.dock.bounce('informational');
   }
+  return result;
 });
 
 ipcMain.on('update-tray-score', (_event, payload: { score: number; monitoring: boolean }) => {

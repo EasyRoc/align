@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import type { CalibrationData, PostureAngles } from '../../shared/types';
 import CalibrateGuide from '../components/CalibrateGuide';
 import CameraPreview from '../components/CameraPreview';
+import ThemeToggle from '../components/ThemeToggle';
 import { useCamera } from '../hooks/useCamera';
 import { usePoseDetection } from '../hooks/usePoseDetection';
 import { PostureScorer } from '../services/PostureScorer';
@@ -54,13 +55,16 @@ export default function Onboarding() {
               <h1 className="text-2xl font-semibold">坐姿校准</h1>
               <p className="mt-2 text-sm text-[var(--color-text-dim)]">记录一组标准坐姿角度作为评分基线。</p>
             </div>
-            <button
-              onClick={() => navigate('/')}
-              className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
-            >
-              <ArrowLeft size={16} />
-              返回
-            </button>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <button
+                onClick={() => navigate('/')}
+                className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
+              >
+                <ArrowLeft size={16} />
+                返回
+              </button>
+            </div>
           </header>
 
           <div className="relative flex justify-center">

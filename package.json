@@ -1,6 +1,6 @@
 {
   "name": "align",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "AI-powered posture correction desktop app",
   "main": "./out/main/index.js",
   "scripts": {

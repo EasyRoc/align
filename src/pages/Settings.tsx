@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { AppSettings, CalibrationData } from '../../shared/types';
 import { DEFAULT_SETTINGS } from '../../shared/types';
+import ThemeToggle from '../components/ThemeToggle';
 import { Storage } from '../services/Storage';
 
 export default function Settings() {
@@ -11,6 +12,7 @@ export default function Settings() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [calibration, setCalibration] = useState<CalibrationData | null>(null);
   const [saved, setSaved] = useState(false);
+  const [notificationStatus, setNotificationStatus] = useState<string | null>(null);
 
   useEffect(() => {
     void Storage.getSettings().then(setSettings);
@@ -56,18 +58,41 @@ export default function Settings() {
     URL.revokeObjectURL(url);
   };
 
+  const handleTestNotification = async () => {
+    if (!window.electronAPI?.showNotification) {
+      setNotificationStatus('当前环境不是 Electron，无法发送系统通知。');
+      return;
+    }
+
+    const result = await window.electronAPI.showNotification(
+      'Align 测试通知',
+      '如果你看到这条通知，桌面通知链路已经可用。',
+    );
+
+    if (result.shown) {
+      setNotificationStatus('测试通知已发送。若桌面未显示，请检查系统通知权限或勿扰模式。');
+    } else if (result.reason === 'unsupported') {
+      setNotificationStatus('当前系统或运行环境不支持 Electron 原生通知。');
+    } else {
+      setNotificationStatus(`通知发送失败${result.error ? `：${result.error}` : '。'}`);
+    }
+  };
+
   return (
     <div className="min-h-dvh bg-[var(--color-bg)] p-4 text-[var(--color-text)] sm:p-6">
       <main className="mx-auto max-w-3xl">
         <header className="mb-6 flex items-center justify-between">
           <h1 className="text-xl font-semibold">设置</h1>
-          <button
-            onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
-          >
-            <ArrowLeft size={16} />
-            返回
-          </button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => navigate('/')}
+              className="inline-flex items-center gap-2 rounded-md bg-[var(--color-border)] px-3 py-2 text-sm transition hover:bg-[var(--color-hover)]"
+            >
+              <ArrowLeft size={16} />
+              返回
+            </button>
+          </div>
         </header>
 
         {saved && (
@@ -111,6 +136,26 @@ export default function Settings() {
               checked={settings.notificationsEnabled}
               onChange={() => void update({ notificationsEnabled: !settings.notificationsEnabled })}
             />
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <div className="text-sm text-[var(--color-text-secondary)]">测试通知</div>
+                <div className="mt-1 text-xs text-[var(--color-text-dim)]">
+                  立即发送一条系统通知，用于检查桌面通知权限。
+                </div>
+                {notificationStatus && (
+                  <div className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
+                    {notificationStatus}
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={() => void handleTestNotification()}
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-cyan-400 px-3 py-2 text-sm font-medium text-neutral-950 transition hover:bg-cyan-300"
+              >
+                <Bell size={16} />
+                发送测试通知
+              </button>
+            </div>
           </Section>
 
           <Section icon={<Crosshair size={18} />} title="校准">
